@@ -1,52 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💀 Funny Death Predictor</title>
+  <title>Funny Death Predictor</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       /* Red Shades */
-      --primary: #c62828; /* Deep Red/Crimson */
-      --secondary: #ef9a9a; /* Light Red/Pink */
-      --dark-bg: #1a0f0f; /* Dark, reddish background */
+      --primary: #c62828;
+      /* Deep Red/Crimson */
+      --secondary: #ef9a9a;
+      /* Light Red/Pink */
+      --dark-bg: #1a0f0f;
+      /* Dark, reddish background */
       --card-bg: #fafafa;
       --text-dark: #222;
       --text-light: #fff;
       --radius: 14px;
     }
 
-    body {
-      font-family: "Poppins", sans-serif;
-      /* Background gradient using dark red/black */
-      background: radial-gradient(circle at top, #331b1b, #1a0f0f);
-      color: var(--text-dark);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden; /* 🚫 No scroll */
-    }
+    /* Inside the <style> block, replace your existing 'body' rule with this: */
+body {
+  font-family: "Poppins", sans-serif;
+  /* Background gradient using dark red/black */
+  background: radial-gradient(circle at top, #331b1b, #1a0f0f);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  /* align-items: center; <--- REMOVE or change to flex-start! */
+  align-items: flex-start; /* Start content from the top */
+  padding: 20px 0; /* Add some top/bottom padding for breathing room */
+  /* overflow: hidden; <--- REMOVE THIS LINE! */
+  /* The default 'overflow: auto;' will now apply, allowing scrollbars */
+}
 
+/* Optional: You can also adjust the card's vertical position using margin */
+.card {
+  /* ... existing styles ... */
+  margin-top: 20px; /* Optional: adds space above the card */
+  margin-bottom: 20px; /* Optional: ensures space below the card when scrolling */
+}
     /* 👻 Floating spooky icons */
     .float {
       position: fixed;
       top: -10%;
       font-size: 1.5em;
       opacity: 0.3;
-      color: #ff6347; /* Tomato red for contrast */
+      color: #ff6347;
+      /* Tomato red for contrast */
       animation: floatDown 10s linear infinite;
       z-index: 0;
     }
 
     @keyframes floatDown {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
-      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
     }
 
     .card {
@@ -72,8 +98,18 @@
     }
 
     @keyframes flicker {
-      0% { opacity: 1; text-shadow: 0 0 10px #ff4500; } /* Orange-Red glow */
-      100% { opacity: 0.8; text-shadow: 0 0 20px #dc143c; } /* Crimson glow */
+      0% {
+        opacity: 1;
+        text-shadow: 0 0 10px #ff4500;
+      }
+
+      /* Orange-Red glow */
+      100% {
+        opacity: 0.8;
+        text-shadow: 0 0 20px #dc143c;
+      }
+
+      /* Crimson glow */
     }
 
     .subtitle {
@@ -104,7 +140,8 @@
       margin-right: 10px;
     }
 
-    input, select {
+    input,
+    select {
       border: none;
       outline: none;
       width: 100%;
@@ -128,7 +165,8 @@
     }
 
     button:hover {
-      background: #931c1c; /* Darker red on hover */
+      background: #931c1c;
+      /* Darker red on hover */
       transform: translateY(-2px);
     }
 
@@ -141,13 +179,16 @@
     }
 
     @keyframes blink {
-      50% { opacity: 0.4; }
+      50% {
+        opacity: 0.4;
+      }
     }
 
     #result {
       margin-top: 20px;
       padding: 20px;
-      background: #ffebee; /* Very light red background */
+      background: #ffebee;
+      /* Very light red background */
       color: var(--primary);
       border-radius: var(--radius);
       opacity: 0;
@@ -174,7 +215,9 @@
       font-weight: 600;
     }
 
-    .footer a:hover { text-decoration: underline; }
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -197,30 +240,36 @@
     <div class="subtitle">Enter your details — destiny awaits 👻</div>
 
     <div class="input-group"><i class="fas fa-user"></i><input id="name" placeholder="Full Name"></div>
-    <div class="input-group"><i class="fas fa-calendar-alt"></i><input id="age" type="number" placeholder="Current Age"></div>
+    <div class="input-group"><i class="fas fa-calendar-alt"></i><input id="age" type="number" placeholder="Current Age">
+    </div>
     <div class="input-group">
       <i class="fas fa-briefcase"></i>
-      <select id="occupation">
-        <option value="">Select Occupation / Role</option>
-        <option>Over-caffeinated Student ☕</option>
-        <option>Sleep-Deprived Employee 😩</option>
-        <option>Freelancer with 47 tabs open 💻</option>
-        <option>Professional Procrastinator 💤</option>
-        <option>Full-time Overthinker 🤔</option>
-        <option>Serial Netflix Binger 📺</option>
-        <option>Part-time Adult, Full-time Mess 😅</option>
-        <option>Unpaid Intern of Life 🧾</option>
-        <option>Professional Napper 🛌</option>
-        <option>Gamer who forgot to pause 🎮</option>
-        <option>Fitness Enthusiast (for 3 days) 🏋️‍♂️</option>
-      </select>
+     <select id="occupation">
+  <option value="">Select Role</option>
+  <option>Student </option>
+  <option>Employee </option>
+  <option>Freelancer </option>
+  <option>Procrastinator </option>
+  <option>Overthinker </option>
+  <option>Intern of Life</option>
+  <option>Professional Napper</option>
+  <option>Gamer</option>
+
+</select>
+
     </div>
 
     <button onclick="predict()">Reveal My Fate ☠️</button>
     <div id="loading">🔮 Reading the stars...</div>
     <div id="result"></div>
 
-    <div class="footer">Just for fun — not your actual horoscope 😂</div>
+    <div class="footer">
+      Just for fun — not your actual horoscope 😂
+      <hr style="border-top: 1px solid #ccc; margin: 15px 0 10px 0;">
+      <a href="YOUR_GITHUB_URL" target="_blank"><i class="fab fa-github"></i> Follow on GitHub</a> | 
+      <a href="YOUR_LINKEDIN_URL" target="_blank"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
+    </div>
+  </div>
   </div>
 
   <script>
@@ -245,28 +294,40 @@
 
         let lifeExpectancy = age < 20 ? 18 + Math.floor(Math.random() * 22)
           : age < 50 ? 40 + Math.floor(Math.random() * 50)
-          : age + Math.floor(Math.random() * 40);
+            : age + Math.floor(Math.random() * 40);
 
         const deathAge = lifeExpectancy;
         const deathYear = new Date().getFullYear() + (deathAge - age);
 
         const reasons = [
-          "fell into a well while escaping from a honeybee.",
+          "fell into a well while escaping from a honeybee. (You just *knew* it was going to sting you.)",
           "slipped on a banana peel while trying to prove bananas aren’t slippery.",
-          "collapsed after realizing the assignment was due *yesterday*.",
-          "died from shock after opening your phone’s front camera.",
-          "laughed too hard at your own meme.",
+          "died from a fatal head rush after standing up too fast after sitting for seven hours.",
+          "fell off the chair while reaching for snacks.",
+          "choked on a crumb while trying to hold a cough in a quiet room.",
+          "perished waiting for the 'Skip Ad' button to appear.",
+          "died from shock after opening your phone’s **front camera**.",
           "fainted after checking the electricity bill.",
-          "choked on a crumb while trying not to cough in public.",
-          "was emotionally finished by one mosquito at 3 AM.",
-          "fell into an existential crisis after liking a 6-year-old post.",
-          "perished from secondhand embarrassment on Instagram Reels.",
+          "died of hunger while deciding what to eat.",
+          "collapsed from overthinking a one-word text.",
+          "mistook super glue for lip balm.",
+          "was scared to death by own reflection at 3 AM.",
+          "laughed too hard at your own meme.",
+          "died disappointed when the vending machine kept both your snack and your change.",
+          "choked while trying to laugh quietly in public.",
+          "died from emotional damage after reading old messages.",
+          "died trying to get Wi-Fi in the one dead corner of the room.",
+          "fell into an existential crisis after accidentally liking a 6-year-old post.",
+          "died of embarrassment after waving back at someone who wasn’t waving at you.",
           "expired after saying 'I’ll sleep for 5 minutes' — 6 hours ago.",
-          "was crushed by a pile of laundry labeled 'tomorrow'.",
+          "got lost in thought — never returned.",
           "died waiting for a text that never came.",
-          "got lost in thought — never returned."
+          "was crushed by a pile of laundry you said you'd fold ‘tomorrow’.",
+          "got jump-scared by your own alarm tone.",
+          "was emotionally finished by one mosquito at 3 AM.",
+          "collapsed after realizing the assignment was due *yesterday*.",
+          "perished from secondhand embarrassment on Instagram Reels."
         ];
-
         const reason = reasons[Math.floor(Math.random() * reasons.length)];
         const emoji = ["💀", "👻", "☠️", "⚡", "💫"][Math.floor(Math.random() * 5)];
 
@@ -282,4 +343,5 @@
     }
   </script>
 </body>
+
 </html>
