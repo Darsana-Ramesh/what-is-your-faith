@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💀 Funny Death Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Red Shades */
+      --primary: #c62828; /* Deep Red/Crimson */
+      --secondary: #ef9a9a; /* Light Red/Pink */
+      --dark-bg: #1a0f0f; /* Dark, reddish background */
+      --card-bg: #fafafa;
+      --text-dark: #222;
+      --text-light: #fff;
+      --radius: 14px;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      /* Background gradient using dark red/black */
+      background: radial-gradient(circle at top, #331b1b, #1a0f0f);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* 🚫 No scroll */
+    }
+
+    /* 👻 Floating spooky icons */
+    .float {
+      position: fixed;
+      top: -10%;
+      font-size: 1.5em;
+      opacity: 0.3;
+      color: #ff6347; /* Tomato red for contrast */
+      animation: floatDown 10s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes floatDown {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 40px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      /* Red/orange glow effect */
+      text-shadow: 0 0 8px rgba(255, 69, 0, 0.2);
+      animation: flicker 2.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; text-shadow: 0 0 10px #ff4500; } /* Orange-Red glow */
+      100% { opacity: 0.8; text-shadow: 0 0 20px #dc143c; } /* Crimson glow */
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 25px;
+      font-size: 0.95em;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: 0.3s;
+    }
+
+    .input-group:focus-within {
+      transform: scale(1.02);
+      /* Red focus shadow */
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.25);
+    }
+
+    .input-group i {
+      color: var(--primary);
+      margin-right: 10px;
+    }
+
+    input, select {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 1em;
+      color: var(--text-dark);
+      background: transparent;
+    }
+
+    button {
+      background: var(--primary);
+      color: var(--text-light);
+      border: none;
+      width: 100%;
+      padding: 15px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      /* Red button shadow */
+      box-shadow: 0 5px 15px rgba(198, 40, 40, 0.4);
+    }
+
+    button:hover {
+      background: #931c1c; /* Darker red on hover */
+      transform: translateY(-2px);
+    }
+
+    #loading {
+      display: none;
+      color: var(--secondary);
+      font-style: italic;
+      margin-top: 10px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.4; }
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 20px;
+      background: #ffebee; /* Very light red background */
+      color: var(--primary);
+      border-radius: var(--radius);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      font-size: 0.95em;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    }
+
+    #result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 0.85em;
+      color: #666;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <script>
+    const symbols = ["💀", "⚡", "👻", "☠️", "💫", "🕳️"];
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement("div");
+      el.className = "float";
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = 7 + Math.random() * 5 + "s";
+      el.style.fontSize = 1 + Math.random() * 1.5 + "em";
+      document.body.appendChild(el);
+    }
+  </script>
+
+  <div class="card">
+    <h1>💀 Predict Your Death</h1>
+    <div class="subtitle">Enter your details — destiny awaits 👻</div>
+
+    <div class="input-group"><i class="fas fa-user"></i><input id="name" placeholder="Full Name"></div>
+    <div class="input-group"><i class="fas fa-calendar-alt"></i><input id="age" type="number" placeholder="Current Age"></div>
+    <div class="input-group">
+      <i class="fas fa-briefcase"></i>
+      <select id="occupation">
+        <option value="">Select Occupation / Role</option>
+        <option>Over-caffeinated Student ☕</option>
+        <option>Sleep-Deprived Employee 😩</option>
+        <option>Freelancer with 47 tabs open 💻</option>
+        <option>Professional Procrastinator 💤</option>
+        <option>Full-time Overthinker 🤔</option>
+        <option>Serial Netflix Binger 📺</option>
+        <option>Part-time Adult, Full-time Mess 😅</option>
+        <option>Unpaid Intern of Life 🧾</option>
+        <option>Professional Napper 🛌</option>
+        <option>Gamer who forgot to pause 🎮</option>
+        <option>Fitness Enthusiast (for 3 days) 🏋️‍♂️</option>
+      </select>
+    </div>
+
+    <button onclick="predict()">Reveal My Fate ☠️</button>
+    <div id="loading">🔮 Reading the stars...</div>
+    <div id="result"></div>
+
+    <div class="footer">Just for fun — not your actual horoscope 😂</div>
+  </div>
+
+  <script>
+    function predict() {
+      const name = document.getElementById("name").value.trim();
+      const age = parseInt(document.getElementById("age").value);
+      const occupation = document.getElementById("occupation").value.trim();
+      const resultDiv = document.getElementById("result");
+      const loading = document.getElementById("loading");
+
+      if (!name || !occupation || isNaN(age) || age <= 0 || age > 120) {
+        resultDiv.innerHTML = '⚠️ Please fill all fields correctly.';
+        resultDiv.classList.add("show");
+        return;
+      }
+
+      resultDiv.classList.remove("show");
+      loading.style.display = "block";
+
+      setTimeout(() => {
+        loading.style.display = "none";
+
+        let lifeExpectancy = age < 20 ? 18 + Math.floor(Math.random() * 22)
+          : age < 50 ? 40 + Math.floor(Math.random() * 50)
+          : age + Math.floor(Math.random() * 40);
+
+        const deathAge = lifeExpectancy;
+        const deathYear = new Date().getFullYear() + (deathAge - age);
+
+        const reasons = [
+          "fell into a well while escaping from a honeybee.",
+          "slipped on a banana peel while trying to prove bananas aren’t slippery.",
+          "collapsed after realizing the assignment was due *yesterday*.",
+          "died from shock after opening your phone’s front camera.",
+          "laughed too hard at your own meme.",
+          "fainted after checking the electricity bill.",
+          "choked on a crumb while trying not to cough in public.",
+          "was emotionally finished by one mosquito at 3 AM.",
+          "fell into an existential crisis after liking a 6-year-old post.",
+          "perished from secondhand embarrassment on Instagram Reels.",
+          "expired after saying 'I’ll sleep for 5 minutes' — 6 hours ago.",
+          "was crushed by a pile of laundry labeled 'tomorrow'.",
+          "died waiting for a text that never came.",
+          "got lost in thought — never returned."
+        ];
+
+        const reason = reasons[Math.floor(Math.random() * reasons.length)];
+        const emoji = ["💀", "👻", "☠️", "⚡", "💫"][Math.floor(Math.random() * 5)];
+
+        resultDiv.innerHTML = `
+  ${emoji} <b>FATE REVEALED for ${name}</b><br><br>
+  <b>You will die in the year ${deathYear}</b> at the age of ${deathAge}.<br><br>
+  <b>Reason:</b> ${reason} <br><br>
+  
+`;
+
+        resultDiv.classList.add("show");
+      }, 1800);
+    }
+  </script>
+</body>
+</html>
